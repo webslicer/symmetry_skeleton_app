@@ -1,0 +1,74 @@
+<?php
+namespace Application;
+
+use Symmetry\Core,
+    //Application\Library\Database,
+    Symmetry\Response,
+    Symmetry\Request;
+
+class Application {
+    public static $config = null;
+    
+    public static $db = null;
+    
+    public static $plugins = array();
+    
+    /**
+     * @var \Application\Model\Customers
+     */
+    public static $user = null;
+        
+    /**
+     * @var \Doctrine\Common\Cache\FilesystemCache
+     */
+    public static $cache = null;
+    
+    const PATH = __DIR__;
+    
+    public static function setConfig($config){
+        self::$config = $config;
+        if(isset($config['db'])){
+            //self::$db = new Database($config['db']);
+        }
+        self::$cache = new \Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir());
+        //self::$cache = new \Doctrine\Common\Cache\ArrayCache();
+        self::$plugins[] = new \Application\Plugins\Security();
+        Response::registerViewFinder(new \Application\Plugins\ViewFindStrategy());
+        Core::registerParentFinder(new \Application\Plugins\ParentFindStrategy());
+        Core::registerCache(new \Application\Library\DoctrineCacheWrapper(self::$cache),10);
+    }
+    
+    public static function run(){
+        if(defined('STDIN')){
+            $response = Core::call(new Request\ConsoleRequest());
+        } else {
+            //$response = Response::getInstance(new Request\UrlRequest(),self::$plugins);
+            $response = Response::getInstance('index/welcome.html', ['msg'=>'this is fantasticer','ctx'=>'html'],'json');
+        }
+        echo($response);
+    }
+    /*
+    public static function call($method,$class=null,$paramArr=null,$plugins=[]){
+        $request = null;
+        if($method instanceof Request){
+            $request = $method;
+            if(is_array($class)){
+                $plugins = $class;
+            }
+        } else {
+            if(is_array($class)){
+                if(is_array($paramArr)){
+                    $plugins = $paramArr;
+                }
+                $paramArr = $class;
+                $class = null;
+            }
+            if(empty($class)){
+                $request = new Request\UrlRequest($method, $paramArr);
+            } else {
+                $request = new Request($method, $class, $paramArr);
+            }
+        }
+        return Core::call($request,$plugins)->display();
+    }*/
+}

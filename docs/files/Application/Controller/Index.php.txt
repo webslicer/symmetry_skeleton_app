@@ -1,0 +1,35 @@
+<?php
+namespace Application\Controller;
+use Symmetry\Controller,
+Application\Application as App;
+
+class Index extends Controller{
+
+    public function index($fxParam,  \Application\Helpers\Input\Test $test){//throw new \Exception('dork');
+        
+		if(!empty($fxParam)){
+			$fxParam .= ' altered';
+		}
+		return ['fxParam'=>$fxParam];
+    }   
+    
+    public function error($errMsg){
+        return ['success'=>false, 'errMsg'=>$errMsg];
+    }
+    
+    public function underconstruction(){
+        
+    }
+    
+    public function welcome($msg=''){
+        return array('success'=>true,'msg'=>$msg);
+    }
+    
+    public function nopermission(){
+    
+    }
+    
+    public function __call($method,$params){
+        $this->forward('underconstruction');
+    }
+}

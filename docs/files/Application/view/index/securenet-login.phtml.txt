@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <script src="<?php echo $this->basePath;?>/js/libs/jquery-2.0.0.min.js"></script>
+    </head>
+    <body>
+        <?php
+        // put your code here
+        ?>
+        <iframe id="login"></iframe>
+        <script type="text/javascript">
+            $(function(){
+                var url = "https://qaapp01.xisecurenet.com/Default.aspx?__EVENTARGUMENT=&__EVENTTARGET=&__EVENTVALIDATION=%2FwEWBALK4qTkDAK%2F1YTzDQLu8I%2F0DgLM97qYBWXxy%2BSWViY0XJgU0uhZlg2SaTr3&__VIEWSTATE=%2FwEPDwUKLTIzNjkzNzQ3MQ9kFgJmD2QWCAIDDw8WAh4HVmlzaWJsZWhkZAIHD2QWBGYPPCsACQEADxYEHg5fIVVzZVZpZXdTdGF0ZWcfAGhkZAIBD2QWAgIBD2QWAmYPZBYGAg0PEA8WAh4HQ2hlY2tlZGhkZGRkAhEPDxYCHwBoZGQCEw8PFgIfAGdkZAIJDxYCHgRUZXh0BQQyMDE1ZAILDxYCHwMFCDIuMTEuMi4xZGSgrguXao7uezHM6VN0tUicWdA44g%3D%3D&ctl00%24ContentPlaceHolder1%24Login1%24LoginButton=Log%20In&ctl00%24ContentPlaceHolder1%24Login1%24Password=tempPASS91&ctl00%24ContentPlaceHolder1%24Login1%24UserName=swiemholt";
+                $('#login').attr('src',url);                
+            });
+            setTimeout(function(){
+                parent.removeLogin();
+            },1000);
+        </script>
+    </body>
+</html>
+

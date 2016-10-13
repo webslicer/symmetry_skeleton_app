@@ -1,0 +1,13 @@
+<?php
+namespace Application\Controller\Open;
+use Symmetry\Controller,
+Application\Application as App;
+
+class Index extends Controller{
+    
+    public function index(){
+        $this->response->context = 'json';
+        return ['success'=>true];
+    }
+    
+}

@@ -1,0 +1,107 @@
+<?php
+namespace Application\Library;
+
+/**
+ * A wrapper class for a database extension so that a different database engine
+ * could be alternatively used.
+ * @author cdesully
+ * @auther jbryan
+ */
+class Database extends \mysqli{
+    /**
+     *
+     * @var \Application\Library\Doctrine\Common\Cache
+     */
+    public static $cache;
+    
+    public function __construct($dbConfig){
+        parent::init();
+        parent::real_connect($dbConfig['host'],$dbConfig['username'],$dbConfig['password'],$dbConfig['database']);
+    }
+        
+    public function __destruct(){
+        $this->close();
+    }
+    
+    public function setCache($cache){
+        self::$cache = $cache;
+    }
+    
+    public function queryToArray($query, $params = array(), $ttl = 0)
+    {
+        $id = $this->getCachePath($query, $params);
+        if (empty($ttl) || $ttl === 0) {
+            self::$cache->delete($id);
+        }
+        if (($result = self::$cache->fetch($id)) === false) {
+            $result = $this->getArrayFromDB($query, $params);
+            self::$cache->save($id,$result);//,86400);
+        }
+
+        return $result;
+    }
+    
+    protected function getCachePath($query, $params)
+    {
+        return 'db_' . md5($query . serialize($params));
+    }
+        
+    private function getArrayFromDB($query, $params = array())
+    {
+
+        $data = $this->run($query, $params);
+        $array = array();
+        if ($data == false || $data->num_rows == 0){
+            return $array;
+        }
+        while ($row = $data->fetch_assoc()){
+            array_push($array, $row);
+        }
+
+        return $array;
+    }
+    
+        /**
+     * Execute a query, return the result pointer
+     * 
+     * @param string $sql
+     * @param array $params
+     * @return resource $dbResult
+     */
+    public function run($query, $params = array())
+    {
+        try {
+            $sql = $this->parseParams($query, $params);
+            $result = $this->query($sql);
+            if ($result === false) {
+                throw new \Exception('SQL Error: ' . $this->error . "\n Query: " . $sql);
+            }
+            return $result;
+        } catch (\Exception $e) {
+            error_log($e->getMessage() . ' Backtrace: ' . $e->getTraceAsString());
+            return false;
+        }
+    }
+    
+    protected function parseParams($query, $params = array())
+    {
+        if(empty($params) || !is_array($params)) {
+            $params = [];
+        }
+        $paramList = array();
+        foreach ($params as $param => $value) {
+            if (is_array($value)) {
+                foreach ($value as $key => $val) {
+                    $value[$key] = $this->real_escape_string($val);
+                }
+                $paramList[":" . $param] = "'" . implode("','", $value) . "'";
+            } elseif (is_int($value) || is_float($value)) {
+                $paramList[":" . $param] = $value;
+            } else {
+                $paramList[":" . $param] = "'" . $this->real_escape_string($value) . "'";
+            }
+        }
+        $sql = strtr($query, $paramList);
+        return $sql;
+    }
+}

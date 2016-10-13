@@ -1,0 +1,11 @@
+<div class="main">
+    <h1>Welcome</h1>
+	Put in a value and see how it propagates through the Index controller index function.<br/>
+	<form action="<?php echo $this->basePath;?>/index/index">
+		<input type="text" name="fxParam" /><br/>
+		<input type="submit" value="do it" />
+	</form>
+	<?php if(!empty($fxParam)){
+		echo('You entered "'.$fxParam.'" ... sorta');
+	} ?>
+</div>

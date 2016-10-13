@@ -1,0 +1,14 @@
+<?php
+namespace Application\Helpers\View;
+use Application\Application as App;
+
+class CacheBuster {
+
+    public static function getPath($file){
+        return $file.'?cache'.CacheBuster::getFileModified($file);
+    }
+   
+    private static function getFileModified($file){
+        return md5(filemtime(App::PATH.'/..'.$file));
+    }
+}

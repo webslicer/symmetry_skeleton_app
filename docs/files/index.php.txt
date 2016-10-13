@@ -1,0 +1,53 @@
+<?php //test
+while(ob_get_level() > 1){
+    ob_end_clean();
+}
+date_default_timezone_set('UTC');
+
+include __DIR__ . '/Application/config/config.php';
+
+//temp file inclusion patch until we get php 5.5
+include __DIR__ . '/Application/Library/Password.php';
+include __DIR__ . '/Application/Library/Symmetry/Setup.php';
+
+/*
+spl_autoload_register(function($className){
+    $path = DIRECTORY_SEPARATOR. str_replace('\\', DIRECTORY_SEPARATOR, $className).'.php';
+    $fullpath = __DIR__ . $path;
+    
+    if(file_exists($fullpath)){
+        include $fullpath;
+    } else {
+        //look for multiple classes in one file
+        $className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+        $className = explode(DIRECTORY_SEPARATOR,$className);
+        if(count($className) > 1){
+            array_pop($className);
+        }
+        $className = implode(DIRECTORY_SEPARATOR,$className);
+        $classCheck = str_replace(DIRECTORY_SEPARATOR, '\\', $className);
+        //when manipulating class path make sure class wasn't added via another method
+        if(class_exists($classCheck,false)){//param 2 is false to not use autoload
+            return false;
+        }
+        $path = DIRECTORY_SEPARATOR. $className .'.php';
+        $fullpath = __DIR__ . $path;
+        if(file_exists($fullpath)){
+            include_once $fullpath;
+        } else {
+            return false;
+        }
+    }
+});
+*/
+
+try{
+    Symmetry\Setup::init($config);
+    Application\Application::setConfig($config);
+    Application\Application::run();
+}catch(Exception $e){
+    echo $e->getMessage();
+    echo('<br/>Page not found.');
+    //Application\Application::$cache->flushAll();
+}
+

@@ -1,0 +1,15 @@
+<style type="text/css">
+.orders_main {
+    height: 10em;
+}
+</style>
+<div class="orders_main">
+    <h1>Welcome</h1>
+    <p>User Admin will assist customer care in fulfilling orders and adjusting product options in the store-front portal.
+    </p>
+    <?php if(!empty($msg)){
+        echo('<p>'.$msg.'</p>');
+    } else {?>
+    <p>Please select from one of the available menu options above.</p>
+    <?php }?>
+</div>

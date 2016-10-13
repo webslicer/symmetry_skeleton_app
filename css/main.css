@@ -1,0 +1,24 @@
+body {
+    margin:0;
+}
+
+.left-menu {
+    background-color: orange;
+    float: left;
+    height: 600px;
+    max-width: 150px;
+    min-height: 200px;
+    min-width: 120px;
+    width: 15%;
+}
+.main-content {
+    float:left;
+    min-width: 120px;
+    padding-left: 20px;
+    width: 65%;
+}
+.top-banner {
+    background-color: yellow;
+    min-height: 50px;
+    width: 100%;
+}

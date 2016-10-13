@@ -1,0 +1,58 @@
+<?php
+namespace Application\Controller;
+use Symmetry\Controller,
+    Application\Application as App,
+    Application\Model\Customers;
+
+class Account extends Controller{
+    
+    /**
+     * 
+     * @param unknown $email {
+     *     filter="FILTER_VALIDATE_EMAIL,array(
+     *         'options'=>array('default' => null))"
+     *     }
+     * @param $password
+     * @param $token 
+     */
+    public function login($email,$password,$token){
+        $errMsg = '';
+        if(!empty($email) && (!empty($password) || !empty($token))){
+            $customer = false;
+            if(!empty($password)){
+                $customer = Customers::verify($email, $password);
+            } else if(!empty($token)){
+                $customer = Customers::verify($email, $token, true);
+            }
+            if($customer){
+                $_SESSION['customer_id'] = $customer->getCustomersId();
+                App::$user = $customer;
+                //record details for customer login
+                $customer->getInfo()->timestampLogin();
+                if($this->response->context == 'json'){
+                    return ['redirectUrl'=>$this->getUrl('index', 'Index')];
+                }
+                $this->redirect('index','Index');
+            } else {
+                $errMsg = 'Email and/or password does not match our records.';
+            }
+        }
+        return ['email'=>$email, 'errmsg'=>$errMsg];
+    }
+    
+    public function logout(){
+        if(isset($_SESSION['adminCustomerId'])){
+            $_SESSION['customer_id'] = $_SESSION['adminCustomerId'];
+            unset($_SESSION['adminCustomerId']);
+        } else {
+            $_SESSION['customer_id'] = null;
+            unset($_SESSION['customer_id']);
+            unset($_SESSION['changePassword']);
+        }
+        if($this->response->context == 'json'){
+            return ['redirectUrl'=>$this->getUrl('index', 'Index')];
+        }
+        $this->redirect('index','Index');
+    }
+    
+}

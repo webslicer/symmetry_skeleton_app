@@ -1,0 +1,10 @@
+<style type="text/css">
+.orders_main {
+    height: 10em;
+}
+</style>
+<div class="orders_main">
+    <h1>Permission Denied</h1>
+    <p>Sorry, you do not have the required permissions to access this page.</p>
+    <p>Please select from one of the available menu options above.</p>
+</div>

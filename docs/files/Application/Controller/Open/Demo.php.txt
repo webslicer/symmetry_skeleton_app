@@ -1,0 +1,25 @@
+<?php
+namespace Application\Controller\Open;
+use Symmetry\Controller,
+Application\Application as App;
+
+class Demo extends Controller{
+    
+    public function index(){
+        $this->response->parent = 'Open/Demo/body';
+        //$this->response->levelUp = 1;
+        //$this->response->context = 'json';
+        $data = ['input1'=>'test'];
+        $response = \Application\Library\Symmetry\Response::getInstance('open/demo/form.phtml', $data);
+        return ['success'=>true,'form'=>$response];
+    }
+    
+    public function body(){
+        $menu = $this->call('menu',['class'=>$this->request->history[0]->class,'method'=>$this->request->history[0]->method]);
+        return ['menu'=>$menu];
+    }
+    
+    public function menu($class,$method){
+        return ['path'=>$class.'\\'.$method];
+    }
+}

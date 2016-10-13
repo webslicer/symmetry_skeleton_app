@@ -1,0 +1,126 @@
+<?php 
+use Application\Application as App,
+    Application\Library\Symmetry\Request,
+    Application\Model\Swwits\UserAdmin\FunctionCL as fxCL,
+    Application\Helpers\View;
+
+?>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie10 lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js lt-ie10" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> 
+<html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title><?php echo View\Meta::getTitle(); ?></title>
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/boilerplate.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/fwrms.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/multiple-select.css">
+        <style type="text/css">
+            nav {float:none;
+                font-size:1em;}
+            .header-section > h1 {
+                font-size: 2em;
+                margin-top: 2px;
+            }
+            .orders_main > h1 {
+                margin: 0;
+            }
+        </style>
+        <!-- Bootstrap Core CSS -->
+        <link href="<?php echo($this->basePath); ?>/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="<?php echo($this->basePath); ?>/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="<?php echo($this->basePath); ?>/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Morris Charts CSS -->
+        <link href="<?php echo($this->basePath); ?>/css/plugins/morris.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <!--link href="<?php echo($this->basePath); ?>/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"-->
+        
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/datatables.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/TableTools.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/TableTools_JUI.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/selectorders.css">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        <?php
+            echo $this->getCapture('css');
+        ?>
+        <script src="<?php echo($this->basePath); ?>/js/libs/modernizr-2.5.3.min.js"></script>
+        <!--[if lt IE 9]>
+            <script src="<?php echo $this->basePath;?>/js/libs/jquery-1.11.3.min.js"></script>
+            <script>window.jQuery || document.write('<script src="<?php echo $this->basePath;?>/js/libs/jquery-1.11.3.min.js"><\/script>')</script>
+        <![endif]-->
+        <!--[if gte IE 9]><!-->
+            <script src="<?php echo $this->basePath;?>/js/libs/jquery-2.1.4.min.js"></script>
+            <script>window.jQuery || document.write('<script src="<?php echo $this->basePath;?>/js/libs/jquery-2.1.4.min.js"><\/script>')</script>
+        <!--<![endif]-->
+        
+  <!-- <script src="<?php echo $this->basePath; ?>/js/libs/jquery.multiple.select.js"></script> -->
+  <script src="<?php echo $this->basePath; ?>/js/libs/multiselectable.min.js"></script>
+   <script src="<?php echo $this->basePath; ?>/js/libs/jquery.multiple.select.js"></script>
+
+    </head>
+    <body><div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<?php echo($this->basePath); ?>"><strong>Beta Test</strong></a>
+            </div>
+            <?php
+            if(!is_null(App::$user)){
+                //echo (View\Navigation::getTopNav($this->basePath));
+                //echo($navigation->getSideMenu());
+            }
+            ?>
+        </nav>
+
+        <div id="page-wrapper">
+            <?php 
+                echo $this->content;
+            ?>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+        <script src="<?php echo($this->basePath); ?>/js/libs/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="<?php echo($this->basePath); ?>/js/plugins/metisMenu/metisMenu.min.js"></script>
+        <script src="<?php echo($this->basePath); ?>/js/sb-admin-2.js"></script>
+        
+        <script src="<?php echo $this->basePath; ?>/js/libs/jquery-ui-1.10.2.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/jquery.dataTables.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/TableTools.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/ZeroClipboard.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/dom-checkbox.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/tinymce/tinymce.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/wysiwyg/jquery-te-1.4.0.min.js"></script>
+        <?php
+            echo $this->getCapture('js');
+        ?>
+    </body>
+</html>

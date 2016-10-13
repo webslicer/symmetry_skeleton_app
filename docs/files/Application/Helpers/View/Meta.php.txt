@@ -1,0 +1,49 @@
+<?php
+namespace Application\Helpers\View;
+use Application\Application as App;
+
+class Meta {
+    private static $title;
+    
+    public static function getTitle(){
+		if(!self::$title) self::generateTitle();
+        return self::$title;
+    }
+    
+    public static function setTitle($title){
+        self::$title = $title;
+    }
+	
+	private static function generateTitle(){
+		
+		// array of post-parsed ignored items
+		$ignored = array("Useradmin");
+		
+		// parse the url into an array
+		$request = parse_url($_SERVER['REQUEST_URI']);
+		$result = trim(str_replace(basename($_SERVER['SCRIPT_NAME']), '', $request["path"]), '/');
+		$result = explode('/', $result);
+		
+		// build title
+		$parts = array();
+		for($i=0;$i<count($result);$i++){
+			
+			$page = $result[$i];
+			
+			// replace dashes with spaces
+			$page = str_replace('-',' ', $page);
+			
+			// replace camelcase with spaces
+			$page = strtolower(preg_replace('/([a-z])([A-Z])/', '$1 $2', $page));
+			
+			// capitalize words
+			$page = ucwords($page);
+			
+			// add to title
+			if(!in_array($page, $ignored)) $parts[] = $page;
+		}
+		
+		// implode the title with dash
+		self::$title = implode(' - ',$parts);
+	}
+}

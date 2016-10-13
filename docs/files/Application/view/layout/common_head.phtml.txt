@@ -1,0 +1,41 @@
+<?php
+use Application\Application as App,
+    Application\Helpers\View\Meta as Meta;
+?>
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title><?php echo Meta::getTitle(); ?></title>
+        <meta name="description" content="">
+
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/smoothness-1-10/jquery-ui-1.10.2.custom.min.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/datatables.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/TableTools.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/TableTools_JUI.css">
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/css/multiple-select.css">
+        <link rel="stylesheet" type="text/css" href="/min/?f=/orders/catalog/templates/SlctOrdersMain/css2/stylesheet_tm.css,/orders/catalog/templates/SlctOrdersMain/css2/stylesheet-new.css,/orders/catalog/templates/fallback/print.css,/orders/catalog/templates/SlctOrdersMain/css2/coolmenu.css,/orders/catalog/templates/SlctOrdersMain/css2/tabscript.css,/orders/catalog/templates/SlctOrdersMain/css2/dynamic_mopics.css" />
+        <link rel="stylesheet" href="<?php echo $this->basePath; ?>/js/plugins/toastr/toastr.css">
+        <?php 
+            echo $this->css;
+            echo $this->getCapture('css');
+        ?>
+        <!--[if lt IE 9]>
+          <script src="<?php echo $this->basePath; ?>/js/libs/jquery-1.11.3.min.js"></script>
+        <![endif]-->
+        <!--[if gte IE 9]><!-->
+        <script src="<?php echo $this->basePath; ?>/js/libs/jquery-2.1.4.min.js"></script>
+        <!--<![endif]-->
+        <!-- script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script -->
+        <script src="<?php echo $this->basePath; ?>/js/libs/jquery-ui-1.10.2.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/modernizr-2.5.3.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/jquery.dataTables.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/TableTools.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/ZeroClipboard.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/dom-checkbox.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/multiselectable.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/libs/jquery.multiple.select.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/plugins/toastr/toastr.min.js"></script>
+        <script src="<?php echo $this->basePath; ?>/js/fw/FW.js"></script>
+    </head>
