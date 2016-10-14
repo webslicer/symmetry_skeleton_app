@@ -29,6 +29,7 @@ class Menu extends Controller
             {
                 $classStr = '\Application\\'.substr($file,strpos($file, 'Controller'));
                 $classStr = substr($classStr,0,strpos($classStr,'.php'));
+                $classStr = str_replace('/', '\\', $classStr);
                 $refl = new \ReflectionClass($classStr);
                 if($refl->isInstantiable()){
                     $methods = $refl->getMethods(\ReflectionMethod::IS_PUBLIC);
